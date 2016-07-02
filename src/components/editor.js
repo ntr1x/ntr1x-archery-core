@@ -1,5 +1,3 @@
-Core = window.Core || {};
-
 (function(Vue, $, Core) {
 
     Core.TabsMixin = function(active) {
@@ -260,4 +258,4 @@ Core = window.Core || {};
         }
     };
 
-})(Vue, jQuery, Core, undefined);
+})(Vue, jQuery, Core);
