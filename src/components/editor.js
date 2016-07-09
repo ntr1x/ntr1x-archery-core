@@ -65,13 +65,11 @@
 
                 doApply: function(model) {
 
-                    console.log('apply', model);
-
-                    this.$set('model', Object.assign(JSON.parse(JSON.stringify(model)), {
+                    Object.assign(this.model, JSON.parse(JSON.stringify(model)), {
                         _action: this.model._action
                             ? this.model._action
                             : 'update'
-                    }));
+                    });
 
                     $(window).trigger('resize');
                 }
