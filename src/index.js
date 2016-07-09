@@ -3,6 +3,10 @@ var Core =
 
     Core = {};
 
+    // if (CKEDITOR) {
+    //     CKEDITOR_BASEPATH = '/assets/vendor/ckeditor/';
+    // }
+
     return Core;
 
 })(jQuery, Vue);
