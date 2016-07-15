@@ -1,17 +1,5 @@
 (function($, Vue, Core) {
 
-    function generateId() {
-
-        var ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        var ID_LENGTH = 8;
-
-        var rtn = '';
-        for (var i = 0; i < ID_LENGTH; i++) {
-            rtn += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length));
-        }
-        return rtn;
-    }
-
     Core.WidgetMixin = {
 
         props: {
@@ -32,7 +20,7 @@
 
         created: function() {
 
-            this.randomId = generateId();
+            this.randomId = Vue.service('palette').generateId('widget-');
 
             // TODO Установить размеры родительской ячейки
 
@@ -66,6 +54,16 @@
             editable: Boolean,
             children: Array,
         },
+
+        data: function() {
+            return {
+                stackId: this.stackId,
+            }
+        },
+
+        created: function() {
+             this.stackId = Vue.service('palette').generateId('stack-');
+        }
     };
 
 })(jQuery, Vue, Core);
