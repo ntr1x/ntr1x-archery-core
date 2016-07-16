@@ -8,7 +8,7 @@
 
         containerSelector: "ol, ul",
         itemSelector: "li",
-        excludeSelector: "li.disabled",
+        excludeSelector: "",
 
         bodyClass: "dragging",
         activeClass: "active",
@@ -70,45 +70,6 @@
             }
 
         },
-
-        // isValidTarget: function($item, container) {
-        //     return true;
-        // },
-        //
-        // onDrag: function ($item, position, _super, event) {
-        //     $item.css(position)
-        // },
-        //
-        // onDragStart: function ($item, container, _super, event) {
-        //     $item.css({
-        //         height: $item.outerHeight(),
-        //         width: $item.outerWidth()
-        //     });
-        //     $item.addClass(container.group.options.draggedClass);
-        //     $("body").addClass(container.group.options.bodyClass);
-        // },
-        //
-        // onDrop: function ($item, container, _super, event) {
-        //     $item.removeClass(container.group.options.draggedClass).removeAttr("style");
-        //     $("body").removeClass(container.group.options.bodyClass);
-        // },
-        //
-        // onMousedown: function ($item, _super, event) {
-        //   if (!event.target.nodeName.match(/^(input|select|textarea)$/i)) {
-        //     event.preventDefault();
-        //     return true;
-        //   }
-        // },
-        //
-        // toggleListeners: function (method) {
-        //
-        //     var that = this,
-        //         events = ['drag','drop','scroll']
-        //
-        //     $.each(events,function  (i,event) {
-        //         that.$document[method](eventNames[event], that[event + 'Proxy'])
-        //     })
-        // },
     };
 
     var context = null;
@@ -119,21 +80,17 @@
         this.$element = $element;
         this.options = $.extend({}, defaults, options);
 
-        $element.on('mousedown', this.options.itemSelector, (e) => { this.handleStart(e); });
-        // $element.on('mouseenter', this.options.containerSelector, (e) => { this.handleEnter(e); });
-        // $element.on('mouseleave', this.options.containerSelector, (e) => { this.handleLeave(e); });
+        $element.on('mousedown.sortable', this.options.itemSelector, (e) => { this.handleStart(e); });
 
         this.draggable = null;
 
         sortables.push(this);
-
-        console.log(JSON.parse(JSON.stringify(this.options)));
     }
 
     $(document).ready(function() {
         $(document)
-            .on('mouseup', (e) => { context && context.sortable.handleEnd(e, context); })
-            .on('mousemove', (e) => { context && context.sortable.handleDrag(e, context); })
+            .on('mouseup.sortable', (e) => { context && context.sortable.handleEnd(e, context); })
+            .on('mousemove.sortable', (e) => { context && context.sortable.handleDrag(e, context); })
         ;
     });
 
@@ -211,6 +168,12 @@
 
         handleStart: function(e) {
 
+            if (this.options.excludeSelector && $(e.target).closest(this.options.excludeSelector).length) {
+                return true;
+            }
+
+            // console.log(e);
+            //
             e.preventDefault();
             e.stopPropagation();
 
@@ -220,6 +183,9 @@
                 var $parent = $item.parent();
 
                 var offset = $item.offset();
+                // if (!offset) {
+                //     console.log($item, );
+                // }
 
                 context = {
                     sortable: this,
@@ -302,13 +268,6 @@
         }
     });
 
-    /**
-     * jQuery API
-     *
-     * Parameters are
-     *   either options on init
-     *   or a method name followed by arguments to pass to the method
-     */
     $.fn[pluginName] = function(methodOrOptions) {
 
         var args = Array.prototype.slice.call(arguments, 1);
