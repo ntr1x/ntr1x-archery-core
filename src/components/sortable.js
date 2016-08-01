@@ -14,7 +14,7 @@
         activeClass: "active",
         draggedClass: "dragged",
         verticalClass: "vertical",
-        horisontalClass: "horisontal",
+        horizontalClass: "horizontal",
         placeholderClass: "placeholder",
 
         placeholder: '<li class="placeholder"></li>',
@@ -146,7 +146,7 @@
                 };
 
                 var orientation = this.options.vertical
-                    ? $container.hasClass(sortable.options.horisontalClass) ? 'h' : 'v'
+                    ? $container.hasClass(sortable.options.horizontalClass) ? 'h' : 'v'
                     : $container.hasClass(sortable.options.verticalClass) ? 'v' : 'h'
                 ;
 
