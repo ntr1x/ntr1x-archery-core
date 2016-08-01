@@ -35,7 +35,7 @@
                     position: 'fixed',
                     left: event.pageX - context.adjustment.left,
                     top: event.pageY - context.adjustment.top,
-                    width: size.sidth,
+                    width: size.width,
                     height: size.height,
                 })
                 .appendTo(context.$parent)
@@ -172,10 +172,12 @@
                 return true;
             }
 
-            // console.log(e);
-            //
-            e.preventDefault();
-            e.stopPropagation();
+            var excludeTags = ['TEXTAREA', 'INPUT', 'BUTTON', 'LABEL'];
+
+            if (excludeTags.indexOf($(e.target).prop("tagName")) < 0) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
 
             if (!context) {
 
@@ -183,9 +185,6 @@
                 var $parent = $item.parent();
 
                 var offset = $item.offset();
-                // if (!offset) {
-                //     console.log($item, );
-                // }
 
                 context = {
                     sortable: this,
