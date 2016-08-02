@@ -4,43 +4,43 @@ var concat = require('gulp-concat');
 var cleancss = require('gulp-clean-css');
 var sourcemaps = require('gulp-sourcemaps');
 
-gulp.task('core-scripts', function() {
+gulp.task('scripts', function() {
     return gulp.src(['src/**/*.js'])
         .pipe(sourcemaps.init())
         // .pipe(browserify())
         .pipe(concat('core.js'))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist/'))
+        .pipe(gulp.dest('dist/js/'))
 })
 
-gulp.task('core-styles', function() {
+gulp.task('styles', function() {
     return gulp.src(['src/**/*.css'])
         .pipe(sourcemaps.init())
         .pipe(cleancss())
         .pipe(concat('core.css'))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist/'));
+        .pipe(gulp.dest('dist/css/'));
 })
 
-gulp.task('core-templates', function() {
+gulp.task('templates', function() {
     return gulp.src(['src/**/*.htm'])
         .pipe(sourcemaps.init())
         .pipe(concat('core.htm'))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist/'));
+        .pipe(gulp.dest('dist/htm/'));
 })
 
 gulp.task('default', [
-    'core-scripts',
-    'core-styles',
-    'core-templates',
+    'scripts',
+    'styles',
+    'templates',
 ])
 
 gulp.task('watch', function() {
 
     gulp.start('default');
 
-    gulp.watch('src/**/*.js', [ 'core-scripts' ])
-    gulp.watch('src/**/*.css', [ 'core-styles' ])
-    gulp.watch('src/**/*.htm', [ 'core-templates' ])
+    gulp.watch('src/**/*.js', [ 'scripts' ])
+    gulp.watch('src/**/*.css', [ 'styles' ])
+    gulp.watch('src/**/*.htm', [ 'templates' ])
 })
