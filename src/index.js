@@ -1,7 +1,7 @@
-var Core =
+window.Core =
 (function($, Vue) {
 
-    Core = {};
+    var Core = {};
 
     // if (CKEDITOR) {
     //     CKEDITOR_BASEPATH = '/assets/vendor/ckeditor/';

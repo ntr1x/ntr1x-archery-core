@@ -22,8 +22,6 @@
 
             this.randomId = Vue.service('palette').generateId('widget-');
 
-            // TODO Установить размеры родительской ячейки
-
             this.$watch('bindings.id', function(value) {
 
                 if (value) {

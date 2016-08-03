@@ -109,7 +109,7 @@
                 for (var i = 0; i < sortables.length; i++) {
                     var s = sortables[i];
                     if (s.options.drop) {
-                        $result = $(document.elementFromPoint(e.pageX, e.pageY)).closest(s.options.itemSelector);
+                        var $result = $(document.elementFromPoint(e.pageX, e.pageY)).closest(s.options.itemSelector);
                         if ($result.length && $result.closest(s.$element).length) {
                             $item = $result;
                             sortable = s;
@@ -125,7 +125,7 @@
                 for (var i = 0; i < sortables.length; i++) {
                     var s = sortables[i];
                     if (s.options.drop) {
-                        $result = $(document.elementFromPoint(e.pageX, e.pageY)).closest(s.options.itemSelector);
+                        var $result = $(document.elementFromPoint(e.pageX, e.pageY)).closest(s.options.itemSelector);
                         if ($result.length && $result.closest(s.$element).length) {
                             $item = $result;
                             sortable = s;
