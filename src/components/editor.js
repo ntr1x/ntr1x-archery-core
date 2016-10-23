@@ -61,17 +61,21 @@
                             }
                         }
                     }).$mount().$appendTo($('body').get(0));
+
+                    $('[data-auto-focus]', dialog.$el).focus();
                 },
 
                 doApply: function(model) {
 
-                    Object.assign(this.model, JSON.parse(JSON.stringify(model)), {
+                    this.$set('model', JSON.parse(JSON.stringify(model)), {
                         _action: this.model._action
                             ? this.model._action
                             : 'update'
                     });
 
-                    $(window).trigger('resize');
+                    this.$nextTick(() => {
+                        $(window).trigger('resize');
+                    });
                 }
             }
         };
@@ -116,6 +120,8 @@
                             }
                         }
                     }).$mount().$appendTo($('body').get(0));
+
+                    $('[data-auto-focus]', dialog.$el).focus();
                 },
 
                 remove: function(item, context) {
@@ -126,7 +132,7 @@
 
                     this.active = item;
 
-                    new ModalEditor({
+                    var dialog = new ModalEditor({
 
                         data: {
                             globals: this.globals,
@@ -148,6 +154,8 @@
                             },
                         }
                     }).$mount().$appendTo($('body').get(0));
+
+                    $('[data-auto-focus]', dialog.$el).focus();
                 },
 
                 doCreate: function(item, context) {
@@ -172,21 +180,6 @@
                     this.items = this.items.slice();
                     $(window).trigger('resize');
                     this.active = null;
-
-                    // console.log('update', item, context);
-                    //
-                    // this.$set('active', Object.assign(JSON.parse(JSON.stringify(item)), {
-                    //     _action: this.active._action
-                    //         ? this.active._action
-                    //         : 'update'
-                    // }));
-                    //
-                    // // this.items = $.extend(true, [], this.items);//this.items.slice();
-                    //
-                    // this.$set('items', $.extend(true, [], this.items));
-                    //
-                    // $(window).trigger('resize');
-                    // this.active = null;
                 },
 
                 doRemove: function(item, context) {
