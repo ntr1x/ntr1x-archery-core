@@ -67,7 +67,7 @@
 
                 doApply: function(model) {
 
-                    this.$set('model', JSON.parse(JSON.stringify(model)), {
+                    Object.assign(this.model, JSON.parse(JSON.stringify(model)), {
                         _action: this.model._action
                             ? this.model._action
                             : 'update'
