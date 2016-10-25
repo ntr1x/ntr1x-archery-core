@@ -1,6 +1,16 @@
 (function($, Core) {
 
-    Vue.filter('jsonPath', function (context, str) {
+    Vue.filter('get', function(context, str) {
+        if (context == null) {
+            return null;
+        }
+        if (str == null) {
+            return context;
+        }
+        return _.get(context, str);
+    })
+
+    Vue.filter('jsonPath', function(context, str) {
         if (str === undefined || context === undefined) {
             return;
         }
@@ -30,7 +40,7 @@
     });
 
     Vue.filter('template', function (string, data) {
-        
+
         var re = /${([^}]+)}/g;
         return string.replace(re, function(match, key) {
             return data[key];

@@ -73,6 +73,13 @@
                             : 'update'
                     });
 
+                    // this.model =
+                    // Object.assign({}, JSON.parse(JSON.stringify(model)), {
+                    //     _action: this.model._action
+                    //         ? this.model._action
+                    //         : 'update'
+                    // });
+
                     this.$nextTick(() => {
                         $(window).trigger('resize');
                     });
