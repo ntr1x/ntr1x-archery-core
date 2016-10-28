@@ -169,6 +169,7 @@
         handleStart: function(e) {
 
             if (this.options.excludeSelector && $(e.target).closest(this.options.excludeSelector).length) {
+                // console.log('exclude');
                 return true;
             }
 
@@ -177,6 +178,8 @@
             if (excludeTags.indexOf($(e.target).prop("tagName")) < 0) {
                 e.preventDefault();
                 e.stopPropagation();
+            } else {
+                return true;
             }
 
             if (!context) {
