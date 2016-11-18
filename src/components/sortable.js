@@ -6,20 +6,20 @@
         drop: true,
         vertical: true,
 
-        containerSelector: "ol, ul",
-        itemSelector: "li",
-        excludeSelector: "",
+        containerSelector: 'ol, ul',
+        itemSelector: 'li',
+        excludeSelector: '',
 
-        bodyClass: "dragging",
-        activeClass: "active",
-        draggedClass: "dragged",
-        verticalClass: "vertical",
-        horizontalClass: "horizontal",
-        placeholderClass: "placeholder",
+        bodyClass: 'dragging',
+        activeClass: 'active',
+        draggedClass: 'dragged',
+        verticalClass: 'vertical',
+        horizontalClass: 'horizontal',
+        placeholderClass: 'placeholder',
 
         placeholder: '<li class="placeholder"></li>',
 
-        onDragStart: function(context, event, _super) {
+        onDragStart: function(context, event) {
 
             var size = {
                 height: context.$item.outerHeight(),
@@ -42,7 +42,7 @@
             ;
         },
 
-        onDrag: function(context, event, _super) {
+        onDrag: function(context, event) {
 
             context.$item.css({
                 left: event.pageX - context.adjustment.left,
@@ -50,7 +50,7 @@
             })
         },
 
-        onDrop: function(context, event, _super) {
+        onDrop: function(context/*, event*/) {
 
             context.$item.remove();
             if (context.location) {
@@ -106,10 +106,10 @@
                 var display = context.$item.css('display');
                 context.$item.css({ display: 'none', });
 
-                for (var i = 0; i < sortables.length; i++) {
-                    var s = sortables[i];
+                for (let i = 0; i < sortables.length; i++) {
+                    let s = sortables[i];
                     if (s.options.drop) {
-                        var $result = $(document.elementFromPoint(e.pageX, e.pageY)).closest(s.options.itemSelector);
+                        let $result = $(document.elementFromPoint(e.pageX, e.pageY)).closest(s.options.itemSelector);
                         if ($result.length && $result.closest(s.$element).length) {
                             $item = $result;
                             sortable = s;
@@ -122,10 +122,10 @@
 
             } else {
 
-                for (var i = 0; i < sortables.length; i++) {
-                    var s = sortables[i];
+                for (let i = 0; i < sortables.length; i++) {
+                    let s = sortables[i];
                     if (s.options.drop) {
-                        var $result = $(document.elementFromPoint(e.pageX, e.pageY)).closest(s.options.itemSelector);
+                        let $result = $(document.elementFromPoint(e.pageX, e.pageY)).closest(s.options.itemSelector);
                         if ($result.length && $result.closest(s.$element).length) {
                             $item = $result;
                             sortable = s;
@@ -175,7 +175,7 @@
 
             var excludeTags = ['TEXTAREA', 'INPUT', 'BUTTON', 'LABEL'];
 
-            if (excludeTags.indexOf($(e.target).prop("tagName")) < 0) {
+            if (excludeTags.indexOf($(e.target).prop('tagName')) < 0) {
                 e.preventDefault();
                 e.stopPropagation();
             } else {
@@ -185,7 +185,7 @@
             if (!context) {
 
                 var $item = $(e.target).closest(this.options.itemSelector);
-                var $parent = $item.parent();
+                // var $parent = $item.parent();
 
                 var offset = $item.offset();
 
@@ -282,7 +282,7 @@
 
             if (object && API[methodOrOptions]) {
                 return API[methodOrOptions].apply(object, args) || this;
-            } else if (!object && (methodOrOptions === undefined || typeof methodOrOptions === "object")) {
+            } else if (!object && (methodOrOptions === undefined || typeof methodOrOptions === 'object')) {
                 $t.data(pluginName, new Sortable($t, methodOrOptions));
             }
 

@@ -1,4 +1,4 @@
-(function($, Core) {
+(function($) {
 
     Vue.directive('combo', {
 
@@ -19,10 +19,6 @@
                 });
             }
         },
-        update: function (newValue, oldValue) {
-        },
-        unbind: function () {
-        }
     });
 
-})(jQuery, Core);
+})(jQuery);

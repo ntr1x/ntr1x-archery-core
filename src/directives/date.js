@@ -1,4 +1,4 @@
-(function($, Core) {
+(function($) {
 
     Vue.directive('date', {
 
@@ -9,14 +9,10 @@
                 $(this.el).datepicker({
                     autoclose: true,
                     todayHighlight: true,
-                    format: "yyyy-mm-dd"
+                    format: 'yyyy-mm-dd'
                 });
             }
         },
-        update: function (newValue, oldValue) {
-        },
-        unbind: function () {
-        }
     });
 
 })(jQuery, Core);

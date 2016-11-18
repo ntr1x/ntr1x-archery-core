@@ -1,4 +1,4 @@
-(function($, Core) {
+(function($) {
 
     Vue.directive('tags', {
 
@@ -10,10 +10,6 @@
                 });
             }
         },
-        update: function (newValue, oldValue) {
-        },
-        unbind: function () {
-        }
     });
 
 })(jQuery, Core);

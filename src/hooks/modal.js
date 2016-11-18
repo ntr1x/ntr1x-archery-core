@@ -1,4 +1,4 @@
-(function($, Core) {
+(function($) {
 
     $(document).ready(function() {
 
@@ -8,7 +8,7 @@
                 dialog = $('.modal-dialog', modal);
 
             modal.css('display', 'block');
-            dialog.css("margin-top", Math.max(0, ($(window).height() - dialog.height()) / 2));
+            dialog.css('margin-top', Math.max(0, ($(window).height() - dialog.height()) / 2));
         }
 
         $($(document), '.modal.modal-center').on('show.bs.modal', function(e) {
@@ -22,4 +22,4 @@
         });
     });
 
-})(jQuery, Core);
+})(jQuery);

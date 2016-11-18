@@ -1,7 +1,7 @@
 (function($) {
 
     $.extend($.expr[':'], {
-        focusable: function(el, index, selector){
+        focusable: function(el) {
             return $(el).is('a, button, :input, [tabindex]');
         }
     });

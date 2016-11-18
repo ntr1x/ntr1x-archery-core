@@ -165,7 +165,7 @@
                     $('[data-auto-focus]', dialog.$el).focus();
                 },
 
-                doCreate: function(item, context) {
+                doCreate: function(item) {
 
                     this.items.push(Object.assign({}, JSON.parse(JSON.stringify(item)), { _action: 'create' }));
 
@@ -175,7 +175,7 @@
                     this.active = null;
                 },
 
-                doUpdate: function(item, context) {
+                doUpdate: function(item) {
 
                     Object.assign(this.active, JSON.parse(JSON.stringify(item)), {
                         _action: this.active._action
@@ -189,15 +189,15 @@
                     this.active = null;
                 },
 
-                doRemove: function(item, context) {
+                doRemove: function(item) {
 
                     var index = this.items.indexOf(item);
                     if (index !== -1) {
-                        var item = this.items[index];
-                        if (item._action == 'create') {
-                            this.items.$remove(item);
+                        var item2 = this.items[index];
+                        if (item2._action == 'create') {
+                            this.items.$remove(item2);
                         } else {
-                            item._action = 'remove';
+                            item2._action = 'remove';
                         }
                     }
 
@@ -228,7 +228,7 @@
         },
 
         methods: {
-            trigger: function(event, data) { this.$dispatch(event, { item: item, context: context }); },
+            trigger: function(event, item, context) { this.$dispatch(event, { item: item, context: context }); },
             create: function(item, context) { this.$dispatch('create', { item: item, context: context} ); },
             update: function(item, context) { this.$dispatch('update', { item: item, context: context} ); },
             remove: function(item, context) { this.$dispatch('remove', { item: item, context: context} ); },

@@ -1,12 +1,8 @@
-(function($, Core) {
+(function($) {
 
     Vue.directive('scrollable', {
 
         bind: function () {
-
-            // $(this.el).css({
-            //     'overflow': 'auto',
-            // });
 
             if ($.fn.perfectScrollbar) {
                 Vue.nextTick(function() {
@@ -17,10 +13,6 @@
             }
 
         },
-        update: function (newValue, oldValue) {
-        },
-        unbind: function () {
-        }
     });
 
-})(jQuery, Core);
+})(jQuery);

@@ -1,4 +1,4 @@
-(function($, Core) {
+(function($) {
 
     Vue.directive('affix', {
 
@@ -8,10 +8,10 @@
                 $(this.el).affix(this.vm.$get(this.expression));
             }
         },
-        update: function (newValue, oldValue) {
-        },
-        unbind: function () {
-        }
+        // update: function (newValue, oldValue) {
+        // },
+        // unbind: function () {
+        // }
     });
 
-})(jQuery, Core);
+})(jQuery);

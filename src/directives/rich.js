@@ -1,4 +1,4 @@
-(function($, Core) {
+(function($) {
 
     Vue.directive('rich', {
 
@@ -6,7 +6,7 @@
 
             if (window.CKEDITOR) {
 
-                this.editor = CKEDITOR.inline(this.el, {
+                this.editor = window.CKEDITOR.inline(this.el, {
                     stylesSet: [
                         { name: 'Bolder', element: 'span', attributes: { 'class': 'extrabold'} }
                     ],
@@ -38,10 +38,6 @@
             }
         },
 
-        update: function (newValue, oldValue) {
-            // console.log('update', newValue, oldValue);
-        },
-
         unbind: function () {
             this.editor.destroy();
             this.editor = null;
@@ -50,4 +46,4 @@
         }
     });
 
-})(jQuery, Core);
+})(jQuery);

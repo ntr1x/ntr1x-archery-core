@@ -60,7 +60,7 @@
         },
 
         created: function() {
-             this.stackId = Vue.service('palette').generateId('stack-');
+            this.stackId = Vue.service('palette').generateId('stack-');
         }
     };
 

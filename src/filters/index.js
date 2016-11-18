@@ -1,4 +1,4 @@
-(function($, Core) {
+(function() {
 
     Vue.filter('get', function(context, str) {
         if (context == null) {
@@ -9,35 +9,6 @@
         }
         return _.get(context, str);
     })
-
-    Vue.filter('jsonPath', function(context, str) {
-        if (str === undefined || context === undefined) {
-            return;
-        }
-
-        var re = /{([^}]+)}/g;
-
-        result = str.replace(re, function(match, expr) {
-            json = JSONPath({
-                json: context,
-                path: expr
-            });
-            if (json.hasOwnProperty(1)) {
-                return 'array';
-            } else {
-                return json;
-            }
-        });
-
-        if (result == 'array') {
-            return JSONPath({
-                json: context,
-                path: str.replace(re, "$1")
-            });
-        } else {
-            return result;
-        }
-    });
 
     Vue.filter('template', function (string, data) {
 
@@ -70,4 +41,4 @@
         }).$data;
     });
 
-})(jQuery, Core);
+})();

@@ -1,8 +1,8 @@
-(function($, Vue, Core) {
+(function($, Vue) {
 
     Vue.use({
 
-        install: function(Vue, options) {
+        install: function(Vue) {
 
             var services = {};
 
@@ -12,4 +12,4 @@
             }
         }
     });
-})(jQuery, Vue, Core);
+})(jQuery, Vue);
