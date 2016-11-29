@@ -12,7 +12,9 @@
         }
 
         $($(document), '.modal.modal-center').on('show.bs.modal', function(e) {
-            reposition(e.target);
+            if ($(e.target).hasClass('.modal-center')) {
+                reposition(e.target);
+            }
         });
 
         $(window).on('resize', () => {
