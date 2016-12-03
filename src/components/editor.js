@@ -175,7 +175,7 @@
 
                     this.items.push(Object.assign({}, JSON.parse(JSON.stringify(item)), { _action: 'create' }));
 
-                    this.items = this.items.slice();
+                    // this.items = this.items.slice();
 
                     $(window).trigger('resize');
                     this.active = null;
@@ -190,7 +190,7 @@
                     });
 
                     // this.items = $.extend(true, [], this.items);//this.items.slice();
-                    this.items = this.items.slice();
+                    // this.items = this.items.slice();
                     $(window).trigger('resize');
                     this.active = null;
                 },
@@ -202,27 +202,27 @@
                         if (item._action == 'create') {
                             this.items.splice(index, 1);
                         } else {
-                            item2._action = 'remove';
+                            item._action = 'remove';
                         }
                     }
 
                     // this.items = $.extend(true, [], this.items);
                     // this.$set('items', $.extend(true, [], this.items));
-                    this.items = this.items.slice();
+                    // this.items = this.items.slice();
 
                     $(window).trigger('resize');
                     this.active = null;
                 }
             },
 
-            events: {
-                create: function(data) { this.create(data.item, data.context); },
-                update: function(data) { this.update(data.item, data.context); },
-                remove: function(data) { this.remove(data.item, data.context); },
-                doCreate: function(data) { this.doCreate(data.item, data.context); },
-                doUpdate: function(data) { this.doUpdate(data.item, data.context); },
-                doRemove: function(data) { this.doRemove(data.item, data.context); },
-            }
+            // events: {
+            //     create: function(data) { this.create(data.item, data.context); },
+            //     update: function(data) { this.update(data.item, data.context); },
+            //     remove: function(data) { this.remove(data.item, data.context); },
+            //     doCreate: function(data) { this.doCreate(data.item, data.context); },
+            //     doUpdate: function(data) { this.doUpdate(data.item, data.context); },
+            //     doRemove: function(data) { this.doRemove(data.item, data.context); },
+            // }
         };
     };
 
@@ -234,10 +234,10 @@
         },
 
         methods: {
-            trigger: function(event, item, context) { this.$dispatch(event, { item: item, context: context }); },
-            create: function(item, context) { this.$dispatch('create', { item: item, context: context} ); },
-            update: function(item, context) { this.$dispatch('update', { item: item, context: context} ); },
-            remove: function(item, context) { this.$dispatch('remove', { item: item, context: context} ); },
+            // trigger: function(event, item, context) { this.$dispatch(event, { item: item, context: context }); },
+            create: function(item, context) { this.$parent.create(item, context); },
+            update: function(item, context) { this.$parent.update(item, context); },
+            remove: function(item, context) { this.$parent.remove(item, context); },
         }
     };
 
