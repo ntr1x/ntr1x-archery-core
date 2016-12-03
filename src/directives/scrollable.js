@@ -2,11 +2,11 @@
 
     Vue.directive('scrollable', {
 
-        bind: function () {
+        bind: function (el) {
 
             if ($.fn.perfectScrollbar) {
                 Vue.nextTick(function() {
-                    $(this.el).perfectScrollbar({
+                    $(el).perfectScrollbar({
                         // axis: this.expression
                     });
                 }.bind(this));

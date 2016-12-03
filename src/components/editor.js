@@ -52,15 +52,17 @@
                         methods: {
                             submit: function() {
                                 this.owner.doApply(this.current);
-                                this.$remove();
+                                this.$el.remove();
                                 this.$destroy();
                             },
                             reset: function() {
-                                this.$remove();
+                                this.$el.remove();
                                 this.$destroy();
                             }
                         }
-                    }).$mount().$appendTo($('body').get(0));
+                    }).$mount();
+
+                    $(dialog.$el).appendTo($('body').get(0));
 
                     $('[data-auto-focus]', dialog.$el).focus();
                 },
@@ -118,15 +120,17 @@
                         methods: {
                             submit: function() {
                                 this.owner.doCreate(this.current);
-                                this.$remove();
+                                this.$el.remove();
                                 this.$destroy();
                             },
                             reset: function() {
-                                this.$remove();
+                                this.$el.remove();
                                 this.$destroy();
                             }
                         }
-                    }).$mount().$appendTo($('body').get(0));
+                    }).$mount();
+
+                    $(dialog.$el).appendTo($('body').get(0));
 
                     $('[data-auto-focus]', dialog.$el).focus();
                 },
@@ -152,15 +156,17 @@
                         methods: {
                             submit: function() {
                                 this.owner.doUpdate(this.current);
-                                this.$remove();
+                                this.$el.remove();
                                 this.$destroy();
                             },
                             reset:  function() {
-                                this.$remove();
+                                this.$el.remove();
                                 this.$destroy();
                             },
                         }
-                    }).$mount().$appendTo($('body').get(0));
+                    }).$mount();
+
+                    $(dialog.$el).appendTo($('body').get(0));
 
                     $('[data-auto-focus]', dialog.$el).focus();
                 },
@@ -169,7 +175,7 @@
 
                     this.items.push(Object.assign({}, JSON.parse(JSON.stringify(item)), { _action: 'create' }));
 
-                    this.$set('items', $.extend(true, [], this.items));
+                    this.items = this.items.slice();
 
                     $(window).trigger('resize');
                     this.active = null;
@@ -193,16 +199,16 @@
 
                     var index = this.items.indexOf(item);
                     if (index !== -1) {
-                        var item2 = this.items[index];
-                        if (item2._action == 'create') {
-                            this.items.$remove(item2);
+                        if (item._action == 'create') {
+                            this.items.splice(index, 1);
                         } else {
                             item2._action = 'remove';
                         }
                     }
 
                     // this.items = $.extend(true, [], this.items);
-                    this.$set('items', $.extend(true, [], this.items));
+                    // this.$set('items', $.extend(true, [], this.items));
+                    this.items = this.items.slice();
 
                     $(window).trigger('resize');
                     this.active = null;
@@ -237,7 +243,7 @@
 
     Core.ModalEditorMixin = {
 
-        attached: function() {
+        mounted: function() {
 
             $(this.$el).modal('show');
             $(this.$el).on('hide.bs.modal', (e) => {
@@ -246,8 +252,10 @@
             });
         },
 
-        detached: function() {
-            $(this.$el).modal('hide');
+        destroyed: function() {
+            this.$nextTick(() => {
+                $(this.$el).modal('hide');
+            })
         },
 
         methods: {
