@@ -32,7 +32,7 @@
 
                 editor.on('change', () => {
                     editor.updateElement();
-                    console.log('CHANGE IT!!!', binding.expression, binding);
+                    // console.log('CHANGE IT!!!', binding.expression, binding);
                     binding.value.value = $(el).val();
                     // this.vm.$set(binding.expression, $(el).val());
                 });

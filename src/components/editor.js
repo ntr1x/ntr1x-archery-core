@@ -31,7 +31,6 @@
 
             props: {
                 model: Object,
-                // globals: Object,
                 context: Object,
             },
 
@@ -42,7 +41,6 @@
                     var dialog = new ModalEditor({
 
                         data: {
-                            // globals: this.globals,
                             owner: this,
                             context: context || this.context,
                             original: this.model,
@@ -96,7 +94,6 @@
 
             props: {
                 items: Array,
-                // globals: Object
             },
 
             methods: {
@@ -110,7 +107,6 @@
                     var dialog = new ModalEditor({
 
                         data: {
-                            // globals: this.globals,
                             owner: this,
                             context: context,
                             original: null,
@@ -146,7 +142,6 @@
                     var dialog = new ModalEditor({
 
                         data: {
-                            // globals: this.globals,
                             owner: this,
                             context: context,
                             original: item,
@@ -230,11 +225,9 @@
 
         props: {
             items: Array,
-            // globals: Object
         },
 
         methods: {
-            // trigger: function(event, item, context) { this.$dispatch(event, { item: item, context: context }); },
             create: function(item, context) { this.$parent.create(item, context); },
             update: function(item, context) { this.$parent.update(item, context); },
             remove: function(item, context) { this.$parent.remove(item, context); },
