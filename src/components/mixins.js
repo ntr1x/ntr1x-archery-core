@@ -1,5 +1,45 @@
 (function($, Vue, Core) {
 
+    Core.Collection = function(owner, name) {
+
+        return {
+
+            create: function(value) {
+
+                owner[name].push(Object.assign({
+                    uuid: Math.random().toString(36).substr(2, 9)
+                }, value));
+            },
+
+            update: function(value) {
+
+                let items = owner[name];
+                for (let i = 0; i < items.length; i++) {
+                    let item = items[i];
+                    if (item.uuid == value.uuid) {
+                        Object.assign(item, value);
+                        return;
+                    }
+                }
+
+                owner[name] = owner[name].slice();
+            },
+
+            remove: function(value) {
+
+                let items = owner[name];
+
+                for (let i = 0; i < items.length; i++) {
+                    let item = items[i];
+                    if (item.uuid == value.uuid) {
+                        items.splice(i, 1);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
     Core.WidgetMixin = {
 
         props: {
@@ -20,7 +60,7 @@
 
         created: function() {
 
-            this.randomId = Vue.service('palette').generateId('widget-');
+            this.randomId = this.$store.getters.palette.generateId('widget-');
 
             this.$watch('bindings.id', function(value) {
 
@@ -54,7 +94,7 @@
         },
 
         created: function() {
-            this.stackId = Vue.service('palette').generateId('stack-');
+            this.stackId = this.$store.getters.palette.generateId('widget-');
         }
     };
 
