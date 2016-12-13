@@ -32,6 +32,7 @@
             props: {
                 owner: Object,
                 property: String,
+                context: Object,
             },
 
             methods: {
@@ -40,7 +41,7 @@
 
                     this.$store.commit('modals/show', {
                         name: ModalEditor,
-                        context: { type: 'update' },
+                        context: this.context,
                         original: this.owner[this.property],
                         events: {
                             submit: (current) => { this.$store.commit('designer/property/update', { parent: this.owner, value: current, property: this.property }) },
