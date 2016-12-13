@@ -30,201 +30,104 @@
         return {
 
             props: {
-                model: Object,
-                context: Object,
+                owner: Object,
+                property: String,
             },
 
             methods: {
 
-                open: function(context) {
+                open: function() {
 
-                    var dialog = new ModalEditor({
-
-                        data: {
-                            owner: this,
-                            context: context || this.context,
-                            original: this.model,
-                            current: JSON.parse(JSON.stringify(this.model))
-                        },
-
-                        methods: {
-                            submit: function() {
-                                this.owner.doApply(this.current);
-                                this.$el.remove();
-                                this.$destroy();
-                            },
-                            reset: function() {
-                                this.$el.remove();
-                                this.$destroy();
-                            }
+                    this.$store.commit('modals/show', {
+                        name: ModalEditor,
+                        context: { type: 'update' },
+                        original: this.owner[this.property],
+                        events: {
+                            submit: (current) => { this.$store.commit('designer/property/update', { parent: this.owner, value: current, property: this.property }) },
                         }
-                    }).$mount();
-
-                    $(dialog.$el).appendTo($('body').get(0));
-
-                    $('[data-auto-focus]', dialog.$el).focus();
+                    })
                 },
-
-                doApply: function(model) {
-
-                    Object.assign(this.model, JSON.parse(JSON.stringify(model)), {
-                        _action: this.model._action
-                            ? this.model._action
-                            : 'update'
-                    });
-
-                    // this.model =
-                    // Object.assign({}, JSON.parse(JSON.stringify(model)), {
-                    //     _action: this.model._action
-                    //         ? this.model._action
-                    //         : 'update'
-                    // });
-
-                    this.$nextTick(() => {
-                        $(window).trigger('resize');
-                    });
-                }
             }
         };
     };
 
-    Core.EditorMixin = function(ListViewer, ModalEditor) {
+    Core.ActionApplyMixin = function(ModalEditor) {
 
         return {
 
             props: {
-                items: Array,
+                model: Object,
             },
 
             methods: {
 
-                trigger: function(event, item, context) {
-                    this.$dispatch(event, { item: item, context: context });
-                },
+                open: function() {
 
-                create: function(item, context) {
-
-                    var dialog = new ModalEditor({
-
-                        data: {
-                            owner: this,
-                            context: context,
-                            original: null,
-                            current: item ? JSON.parse(JSON.stringify(item)) : {}
-                        },
-
-                        methods: {
-                            submit: function() {
-                                this.owner.doCreate(this.current);
-                                this.$el.remove();
-                                this.$destroy();
-                            },
-                            reset: function() {
-                                this.$el.remove();
-                                this.$destroy();
-                            }
+                    this.$store.commit('modals/show', {
+                        name: ModalEditor,
+                        context: { type: 'update' },
+                        original: this.model,
+                        events: {
+                            submit: (current) => { this.$store.commit('designer/params/update', { model: this.model, value: current }) },
                         }
-                    }).$mount();
-
-                    $(dialog.$el).appendTo($('body').get(0));
-
-                    $('[data-auto-focus]', dialog.$el).focus();
+                    })
                 },
+            }
+        };
+    };
 
-                remove: function(item, context) {
-                    this.doRemove(item, context);
-                },
+    Core.EditorMixin = function(ModalEditor) {
 
-                update: function(item, context) {
+        return {
 
-                    this.active = item;
-
-                    var dialog = new ModalEditor({
-
-                        data: {
-                            owner: this,
-                            context: context,
-                            original: item,
-                            current: JSON.parse(JSON.stringify(item))
-                        },
-
-                        methods: {
-                            submit: function() {
-                                this.owner.doUpdate(this.current);
-                                this.$el.remove();
-                                this.$destroy();
-                            },
-                            reset:  function() {
-                                this.$el.remove();
-                                this.$destroy();
-                            },
-                        }
-                    }).$mount();
-
-                    $(dialog.$el).appendTo($('body').get(0));
-
-                    $('[data-auto-focus]', dialog.$el).focus();
-                },
-
-                doCreate: function(item) {
-
-                    this.items.push(Object.assign({}, JSON.parse(JSON.stringify(item)), { _action: 'create' }));
-
-                    // this.items = this.items.slice();
-
-                    $(window).trigger('resize');
-                    this.active = null;
-                },
-
-                doUpdate: function(item) {
-
-                    Object.assign(this.active, JSON.parse(JSON.stringify(item)), {
-                        _action: this.active._action
-                            ? this.active._action
-                            : 'update'
-                    });
-
-                    // this.items = $.extend(true, [], this.items);//this.items.slice();
-                    // this.items = this.items.slice();
-                    $(window).trigger('resize');
-                    this.active = null;
-                },
-
-                doRemove: function(item) {
-
-                    var index = this.items.indexOf(item);
-                    if (index !== -1) {
-                        if (item._action == 'create') {
-                            this.items.splice(index, 1);
-                        } else {
-                            item._action = 'remove';
-                        }
-                    }
-
-                    // this.items = $.extend(true, [], this.items);
-                    // this.$set('items', $.extend(true, [], this.items));
-                    // this.items = this.items.slice();
-
-                    $(window).trigger('resize');
-                    this.active = null;
-                }
+            props: {
+                owner: Object,
+                property: String,
             },
 
-            // events: {
-            //     create: function(data) { this.create(data.item, data.context); },
-            //     update: function(data) { this.update(data.item, data.context); },
-            //     remove: function(data) { this.remove(data.item, data.context); },
-            //     doCreate: function(data) { this.doCreate(data.item, data.context); },
-            //     doUpdate: function(data) { this.doUpdate(data.item, data.context); },
-            //     doRemove: function(data) { this.doRemove(data.item, data.context); },
-            // }
+            methods: {
+
+                remove: function(item) {
+
+                    this.$store.commit('designer/items/remove', { parent: this.owner, item: item, property: this.property })
+                },
+
+                create: function(item) {
+
+                    this.$store.commit('modals/show', {
+                        name: ModalEditor,
+                        context: { type: 'create' },
+                        original: item,
+                        events: {
+                            submit: (current) => { this.$store.commit('designer/items/create', { parent: this.owner, item: current, property: this.property }) },
+                        }
+                    })
+                },
+
+                update: function(item) {
+
+                    this.$store.commit('modals/show', {
+                        name: ModalEditor,
+                        context: { type: 'update' },
+                        original: item,
+                        events: {
+                            submit: (current) => { this.$store.commit('designer/items/update', { parent: this.owner, item: current, property: this.property }) },
+                        }
+                    })
+                },
+            },
         };
     };
 
     Core.ListViewerMixin = {
 
         props: {
-            items: Array,
+            owner: Object,
+            property: String,
+        },
+
+        computed: {
+            items: function() { return this.owner[this.property]; }
         },
 
         methods: {
@@ -235,6 +138,22 @@
     };
 
     Core.ModalEditorMixin = {
+
+        props: {
+            original: Object,
+            context: Object,
+            events: Object,
+        },
+
+        created: function() {
+            this.current = JSON.parse(JSON.stringify(this.original));
+        },
+
+        data: function() {
+            return {
+                current: this.current
+            }
+        },
 
         mounted: function() {
 
@@ -252,8 +171,14 @@
         },
 
         methods: {
-            submit: function() {},
-            reset: function() {}
+            submit: function() {
+                this.events && this.events.submit && this.events.submit(this.current);
+                this.$destroy();
+            },
+            reset: function() {
+                this.events && this.events.reset && this.events.reset(this.current);
+                this.$destroy();
+            }
         }
     };
 
