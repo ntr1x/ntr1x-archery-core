@@ -13,9 +13,10 @@
 
             insert: function(value, index) {
 
-                owner[name].splice(index, 0, Object.assign({
+                owner[name].splice(index, 0, {
+                    ...value,
                     uuid: Math.random().toString(36).substr(2, 9)
-                }, value));
+                })
 
                 owner[name] = owner[name].slice();
 
