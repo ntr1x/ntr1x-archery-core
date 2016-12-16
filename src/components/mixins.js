@@ -1,5 +1,38 @@
 (function($, Vue, Core) {
 
+    Core.UUID = {
+        random: () => { return Math.random().toString(36).substr(2, 9) }
+    }
+
+    Core.Array = function(owner, name) {
+
+        return {
+
+            create: function(value) {
+
+                owner[name].push(value);
+            },
+
+            insert: function(value, index) {
+
+                owner[name].splice(index, 0, value)
+                owner[name] = owner[name].slice();
+            },
+
+            update: function(value, index) {
+
+                let item = owner[name][index];
+                Object.assign(item, value);
+                owner[name] = owner[name].slice();
+            },
+
+            remove: function(index) {
+
+                owner[name].splice(index, 1);
+            }
+        }
+    }
+
     Core.Collection = function(owner, name) {
 
         return {

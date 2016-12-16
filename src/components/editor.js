@@ -21,7 +21,7 @@
                 isActive: function(tab) {
                     return this.tabs.active == tab;
                 }
-            }
+            },
         }
     }
 
