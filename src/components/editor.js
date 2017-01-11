@@ -39,7 +39,7 @@
 
                 open: function() {
 
-                    this.$store.commit('modals/show', {
+                    this.$store.commit('modals/editor/show', {
                         name: ModalEditor,
                         context: this.context,
                         original: this.owner[this.property],
@@ -64,7 +64,7 @@
 
                 open: function() {
 
-                    this.$store.commit('modals/show', {
+                    this.$store.commit('modals/editor/show', {
                         name: ModalEditor,
                         context: { type: 'update' },
                         original: this.model,
@@ -95,7 +95,7 @@
 
                 create: function(item) {
 
-                    this.$store.commit('modals/show', {
+                    this.$store.commit('modals/editor/show', {
                         name: ModalEditor,
                         context: { type: 'create' },
                         original: item,
@@ -107,7 +107,7 @@
 
                 update: function(item) {
 
-                    this.$store.commit('modals/show', {
+                    this.$store.commit('modals/editor/show', {
                         name: ModalEditor,
                         context: { type: 'update' },
                         original: item,
