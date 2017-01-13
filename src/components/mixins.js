@@ -29,6 +29,7 @@
             remove: function(index) {
 
                 owner[name].splice(index, 1);
+                owner[name] = owner[name].slice();
             }
         }
     }
