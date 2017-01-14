@@ -19,6 +19,8 @@
 
         placeholder: '<li class="placeholder"></li>',
 
+        offset: 'offset', // or position
+
         onDragStart: function(context, event) {
 
             var size = {
@@ -187,7 +189,10 @@
                 var $item = $(e.target).closest(this.options.itemSelector);
                 // var $parent = $item.parent();
 
-                var offset = $item.offset();
+                var offset = this.options.offset == 'offset'
+                    ? $item.offset()
+                    : $item.position()
+                ;
 
                 context = {
                     sortable: this,
@@ -200,10 +205,16 @@
                     $targetContainer: null,
                     location: this.dropLocation(e),
                     adjustment: {
+                        // left: 0,
+                        // top: 0,
                         left: e.clientX - offset.left,
-                        top: e.clientY - offset.top,
+                        top: e.clientY - offset.top
+                        // left: e.clientX - 2 * offset.left + size.width / 4,
+                        // top: e.clientY - 2 * offset.top + size.height / 4,
                     },
                 };
+
+                // console.log(JSON.stringify(context.adjustment), JSON.stringify(offset));
 
                 this.options.onDragStart(context, e, defaults.onDragStart);
             }

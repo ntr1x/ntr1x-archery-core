@@ -42,7 +42,7 @@
                     this.$store.commit('modals/editor/show', {
                         name: ModalEditor,
                         context: this.context,
-                        original: this.owner[this.property],
+                        original: this.owner[this.property] || {},
                         events: {
                             submit: (current) => { this.$store.commit('designer/property/update', { parent: this.owner, value: current, property: this.property }) },
                         }
