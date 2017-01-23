@@ -6,6 +6,7 @@
     "globals": {
         "_": false,
         "jQuery": false,
+        "ace": false,
         "require": false,
         "Vue": false,
         "Core": true,

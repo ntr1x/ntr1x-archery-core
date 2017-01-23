@@ -12,6 +12,9 @@ textarea.form-control + .cke_textarea_inline {
   border-radius: 4px;
   padding: 6px 12px;
 }
+[data-form="texteditor"] {
+  min-height: 200px;
+}
 [data-form="file"] {
   overflow: hidden;
 }
