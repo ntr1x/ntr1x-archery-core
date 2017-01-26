@@ -26,14 +26,17 @@
                 maxLines: 10000
             });
 
-            editor.getSession().setMode('ace/mode/velocity');
+            editor.getSession().setMode(this.mode);
             editor.getSession().setUseSoftTabs(true);
             editor.getSession().setUseWrapMode(true);
-            editor.getSession().setWrapLimitRange(110, 110);
+            editor.getSession().setWrapLimitRange(80, 80);
 
             editor.getSession().on('change', () => {
                 this.$emit('input', editor.getSession().getValue())
             })
+        },
+        beforeDestroy: function() {
+            this.editor.destroy()
         }
     })
 

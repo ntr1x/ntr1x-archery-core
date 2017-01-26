@@ -13,7 +13,7 @@ textarea.form-control + .cke_textarea_inline {
   padding: 6px 12px;
 }
 [data-form="texteditor"] {
-  min-height: 200px;
+  min-height: 30px;
 }
 [data-form="file"] {
   overflow: hidden;
