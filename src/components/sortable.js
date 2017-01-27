@@ -194,6 +194,14 @@
                     : $item.position()
                 ;
 
+                let margin = {
+                    // left: parseInt($item.css('marginLeft')),
+                    left: parseInt($item.css('marginLeft')),
+                    top: parseInt($item.css('marginTop')),
+                }
+
+                console.log(margin, this.options.offset)
+
                 context = {
                     sortable: this,
                     index: $item.index(),
@@ -207,8 +215,9 @@
                     adjustment: {
                         // left: 0,
                         // top: 0,
+                        // left: 0,
                         left: e.clientX - offset.left,
-                        top: e.clientY - offset.top
+                        top: e.clientY - offset.top,
                         // left: e.clientX - 2 * offset.left + size.width / 4,
                         // top: e.clientY - 2 * offset.top + size.height / 4,
                     },
