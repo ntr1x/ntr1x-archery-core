@@ -6,12 +6,14 @@
     "globals": {
         "_": false,
         "jQuery": false,
+        "ace": false,
         "require": false,
         "Vue": false,
         "Core": true,
         "Shell": true,
         "Landing": true,
     },
+    "parser": "babel-eslint",
     "extends": "eslint:recommended",
     "rules": {
         "indent": [

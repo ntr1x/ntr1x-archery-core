@@ -2,10 +2,10 @@
 
     Vue.directive('affix', {
 
-        bind: function () {
+        inserted: function (el, binding) {
 
             if ($.fn.affix) {
-                $(this.el).affix(this.vm.$get(this.expression));
+                $(el).affix(binding.value);
             }
         },
         // update: function (newValue, oldValue) {

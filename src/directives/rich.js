@@ -2,11 +2,12 @@
 
     Vue.directive('rich', {
 
-        bind: function () {
+        inserted: function (el, binding) {
+
 
             if (window.CKEDITOR) {
 
-                this.editor = window.CKEDITOR.inline(this.el, {
+                let editor = window.CKEDITOR.inline(el, {
                     stylesSet: [
                         { name: 'Bolder', element: 'span', attributes: { 'class': 'extrabold'} }
                     ],
@@ -29,20 +30,23 @@
                     ]
                 });
 
-                this.editor.on('change', function() {
-                    this.editor.updateElement();
-                    this.vm.$set(this.expression, $(this.el).val());
-                }.bind(this));
+                editor.on('change', () => {
+                    editor.updateElement();
+                    // console.log('CHANGE IT!!!', binding.expression, binding);
+                    binding.value.value = $(el).val();
+                    // this.vm.$set(binding.expression, $(el).val());
+                });
 
-                this.editor.setData(this.vm.$get(this.expression));
+                editor.setData(binding.value.value);
+
+                $(el).data('editor', editor);
             }
         },
 
-        unbind: function () {
-            this.editor.destroy();
-            this.editor = null;
-            this.textarea = null;
-            this.input = null;
+        unbind: function (el) {
+            let editor = $(el).data('editor');
+            editor.destroy();
+            $(el).data('editor', null);
         }
     });
 
