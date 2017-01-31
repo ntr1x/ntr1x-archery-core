@@ -55,7 +55,7 @@
                         let item = items[i];
 
                         let n = item.prop.name;
-                        let r = item.prop.variable;
+                        let r = item.prop.variable || false;
                         // let t = item.prop.type;
 
                         let b = item.param ? item.param.binding : null;
@@ -94,7 +94,7 @@
 
                             let vv;
 
-                            if (b) {
+                            if (b && b.expression) {
 
                                 let array = [];
                                 let result = runtime.evaluate(self, b, v);
@@ -123,10 +123,10 @@
 
                                 let array = [];
 
-                                var index = 0;
+                                let index = 0;
                                 if (Array.isArray(v)) {
-                                    for(var j = 0; j < v.length; j++) {
-                                        var vi = v[j];
+                                    for(let j = 0; j < v.length; j++) {
+                                        let vi = v[j];
                                         if (vi._action != 'remove') {
                                             array[index++] = this.evaluateParams(self, item.prop.props, vi);
                                         }
@@ -139,7 +139,6 @@
                             value[n] = vv;
 
                         } else {
-
                             let vv = runtime.evaluate(self, b, v);
                             value[n] = vv// || '';
                         }
@@ -152,5 +151,5 @@
             Vue.prototype.$runtime = runtime;
         }
     });
-    
+
 })(jQuery, Vue);

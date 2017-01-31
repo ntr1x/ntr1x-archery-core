@@ -90,10 +90,7 @@
 
         props: {
             page: Object,
-            data: Object,
-            storage: Object,
             stack: Object,
-            params: Object,
             bindings: Object,
             children: Array,
             editable: Boolean,
