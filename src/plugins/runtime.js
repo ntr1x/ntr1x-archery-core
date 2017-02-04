@@ -85,10 +85,7 @@
                         } else if (item.prop.type == 'action') {
 
                             let vv = runtime.evaluate(self, b, v);
-                            value[n] = {
-                                action: item.param.action,
-                                payload: vv
-                            }// vv || '';
+                            value[n] = vv
 
                         } else if (item.prop.type == 'multiple') {
 
