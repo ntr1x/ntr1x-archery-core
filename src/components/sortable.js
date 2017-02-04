@@ -200,8 +200,6 @@
                     top: parseInt($item.css('marginTop')),
                 }
 
-                console.log(margin, this.options.offset)
-
                 context = {
                     sortable: this,
                     index: $item.index(),

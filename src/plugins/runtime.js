@@ -7,7 +7,7 @@
             let runtime = {
 
                 evaluate: function(self, b, v) {
-
+                    
                     if (b && b.expression) {
 
                         try {
