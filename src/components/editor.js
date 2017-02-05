@@ -183,4 +183,22 @@
         }
     };
 
+    Core.ModalDialog = {
+
+        mounted: function() {
+
+            $(this.$el).modal('show');
+            $(this.$el).on('hide.bs.modal', (e) => {
+                e.stopPropagation();
+                this.reset();
+            });
+        },
+
+        destroyed: function() {
+            this.$nextTick(() => {
+                $(this.$el).modal('hide');
+            })
+        },
+    };
+
 })(Vue, jQuery, Core);
