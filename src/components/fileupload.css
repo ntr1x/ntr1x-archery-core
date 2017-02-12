@@ -1,0 +1,13 @@
+.fileupload {
+  position: relative;
+  display: table;
+  overflow: hidden;
+}
+.fileupload .fileupload-control {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  font-size: 500px;
+  opacity: 0;
+  cursor: pointer;
+}
