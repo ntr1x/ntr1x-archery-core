@@ -8,28 +8,38 @@
 
         return {
 
+            clear: function() {
+
+                owner[name].splice(0, owner[name].length)
+                return this
+            },
+
             create: function(value) {
 
-                owner[name].push(value);
+                owner[name].push(value)
+                return this
             },
 
             insert: function(value, index) {
 
                 owner[name].splice(index, 0, value)
-                owner[name] = owner[name].slice();
+                owner[name] = owner[name].slice()
+                return this
             },
 
             update: function(value, index) {
 
-                let item = owner[name][index];
-                Object.assign(item, value);
-                owner[name] = owner[name].slice();
+                let item = owner[name][index]
+                Object.assign(item, value)
+                owner[name] = owner[name].slice()
+                return this
             },
 
             remove: function(index) {
 
-                owner[name].splice(index, 1);
-                owner[name] = owner[name].slice();
+                owner[name].splice(index, 1)
+                owner[name] = owner[name].slice()
+                return this
             }
         }
     }
@@ -38,11 +48,18 @@
 
         return {
 
+            clear: function() {
+
+                owner[name].splice(0, owner[name].length)
+                return this
+            },
+
             create: function(value) {
 
                 owner[name].push(Object.assign({
                     uuid: Math.random().toString(36).substr(2, 9)
-                }, value));
+                }, value))
+                return this
             },
 
             insert: function(value, index) {
@@ -52,23 +69,23 @@
                     uuid: Math.random().toString(36).substr(2, 9)
                 })
 
-                owner[name] = owner[name].slice();
-
-                // console.log(owner.name, owner);
+                owner[name] = owner[name].slice()
+                return this
             },
 
             update: function(value) {
 
-                let items = owner[name];
+                let items = owner[name]
                 for (let i = 0; i < items.length; i++) {
-                    let item = items[i];
+                    let item = items[i]
                     if (item.uuid == value.uuid) {
-                        Object.assign(item, value);
+                        Object.assign(item, value)
                         return;
                     }
                 }
 
-                owner[name] = owner[name].slice();
+                owner[name] = owner[name].slice()
+                return this
             },
 
             remove: function(value) {
@@ -76,12 +93,13 @@
                 let items = owner[name];
 
                 for (let i = 0; i < items.length; i++) {
-                    let item = items[i];
+                    let item = items[i]
                     if (item.uuid == value.uuid) {
-                        items.splice(i, 1);
+                        items.splice(i, 1)
                         return;
                     }
                 }
+                return this
             }
         }
     }
@@ -122,11 +140,30 @@
     Core.StackedMixin = {
 
         props: {
-            globals: Object,
-            settings: Object,
+            // globals: Object,
+            // settings: Object,
             page: Object,
-            data: Object,
-            storage: Object,
+            // data: Object,
+            // storage: Object,
+            editable: Boolean,
+            children: Array,
+        },
+
+        data: function() {
+            return {
+                stackId: this.stackId,
+            }
+        },
+
+        created: function() {
+            this.stackId = this.$store.getters.palette.generateId('widget-');
+        }
+    };
+
+    Core.RepeaterMixin = {
+
+        props: {
+            page: Object,
             editable: Boolean,
             children: Array,
         },

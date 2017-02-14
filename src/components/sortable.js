@@ -4,7 +4,7 @@
 
         drag: true,
         drop: true,
-        vertical: true,
+        // vertical: true,
 
         containerSelector: 'ol, ul',
         itemSelector: 'li',
@@ -30,13 +30,15 @@
 
             context.$originalItem = context.$item;
 
+            // console.log(event.pageX, event.pageY, context.adjustment.left, context.adjustment.top, event.pageX - context.adjustment.left, event.pageY - context.adjustment.top)
+
             context.$item = context.$originalItem
                 .clone()
                 .addClass(context.sortable.options.draggedClass)
                 .css({
                     position: 'fixed',
-                    left: event.pageX - context.adjustment.left,
-                    top: event.pageY - context.adjustment.top,
+                    left: event.pageX - context.adjustment.left - 40,
+                    top: event.pageY - context.adjustment.top - 40,
                     width: size.width,
                     height: size.height,
                 })
@@ -47,8 +49,8 @@
         onDrag: function(context, event) {
 
             context.$item.css({
-                left: event.pageX - context.adjustment.left,
-                top: event.pageY - context.adjustment.top,
+                left: event.pageX - context.adjustment.left - 40,
+                top: event.pageY - context.adjustment.top - 40,
             })
         },
 
@@ -57,18 +59,21 @@
             context.$item.remove();
             if (context.location) {
 
-                context.$item = context.location.before
-                    ? context.$item.insertBefore(context.location.$item)
-                    : context.$item.insertAfter(context.location.$item)
-                ;
+                if (context.location.before || context.location.after) {
 
-                context.$item.css({
-                    position: '',
-                    left: '',
-                    top: '',
-                    width: '',
-                    height: '',
-                })
+                    context.$item = context.location.before
+                        ? context.$item.insertBefore(context.location.$item)
+                        : context.$item.insertAfter(context.location.$item)
+                    ;
+
+                    context.$item.css({
+                        position: '',
+                        left: '',
+                        top: '',
+                        width: '',
+                        height: '',
+                    })
+                }
             }
 
         },
@@ -147,21 +152,34 @@
                     height: $item.outerHeight(),
                 };
 
-                var orientation = this.options.vertical
-                    ? $container.hasClass(sortable.options.horizontalClass) ? 'h' : 'v'
-                    : $container.hasClass(sortable.options.verticalClass) ? 'v' : 'h'
-                ;
+                // var orientation = this.options.vertical
+                //     ? $container.hasClass(sortable.options.horizontalClass) ? 'h' : 'v'
+                //     : $container.hasClass(sortable.options.verticalClass) ? 'v' : 'h'
+                // ;
 
-                var before = (orientation == 'h')
-                    ? e.pageX - offset.left < size.width / 2
-                    : e.pageY - offset.top < size.height / 2
-                ;
+                let orientation = null;
+                if ($container.hasClass(sortable.options.horizontalClass)) orientation = 'h';
+                if ($container.hasClass(sortable.options.verticalClass)) orientation = 'v';
+
+                let before = false
+                let after = false
+
+                if (orientation) {
+
+                    before = (orientation == 'h')
+                        ? e.pageX - offset.left < size.width / 2
+                        : e.pageY - offset.top < size.height / 2
+                    ;
+
+                    after = !before;
+                }
 
                 return {
                     $item: $item,
                     $container: $container,
                     sortable: sortable,
                     before: before,
+                    after: after,
                 };
             }
 
@@ -189,16 +207,23 @@
                 var $item = $(e.target).closest(this.options.itemSelector);
                 // var $parent = $item.parent();
 
-                var offset = this.options.offset == 'offset'
-                    ? $item.offset()
-                    : $item.position()
-                ;
+                // var offset = this.options.offset == 'offset'
+                //     ? $item.offset()
+                //     : $item.position()
+                // ;
 
-                let margin = {
-                    // left: parseInt($item.css('marginLeft')),
-                    left: parseInt($item.css('marginLeft')),
-                    top: parseInt($item.css('marginTop')),
-                }
+                // var poffset = $item.parent().offset();
+                var offset = $item.offset();
+                // var offset = {
+                //     left: parseInt(coffset.left) - parseInt(poffset.left),
+                //     top: parseInt(coffset.top) - parseInt(poffset.top),
+                // }
+
+                // let margin = {
+                //     // left: parseInt($item.css('marginLeft')),
+                //     left: parseInt($item.css('marginLeft')),
+                //     top: parseInt($item.css('marginTop')),
+                // }
 
                 context = {
                     sortable: this,
@@ -211,11 +236,11 @@
                     $targetContainer: null,
                     location: this.dropLocation(e),
                     adjustment: {
+                        // left: parseInt(offset.left),
+                        // top: parseInt(offset.top),
                         // left: 0,
-                        // top: 0,
-                        // left: 0,
-                        left: e.clientX - offset.left,
-                        top: e.clientY - offset.top,
+                        left: parseInt(e.clientX) - parseInt(offset.left),
+                        top: parseInt(e.clientY) - parseInt(offset.top),
                         // left: e.clientX - 2 * offset.left + size.width / 4,
                         // top: e.clientY - 2 * offset.top + size.height / 4,
                     },
@@ -267,10 +292,12 @@
                 context.location = this.dropLocation(e);
                 if (context.location) {
                     context.location.$container.addClass(context.location.sortable.options.activeClass);
-                    context.$placeholder = context.location.before
-                        ? $(context.location.sortable.options.placeholder).insertBefore(context.location.$item)
-                        : $(context.location.sortable.options.placeholder).insertAfter(context.location.$item)
-                    ;
+                    if (context.location.before || context.location.after) {
+                        context.$placeholder = context.location.before
+                            ? $(context.location.sortable.options.placeholder).insertBefore(context.location.$item)
+                            : $(context.location.sortable.options.placeholder).insertAfter(context.location.$item)
+                        ;
+                    }
                 }
 
                 context.sortable.options.onDrag(context, e, defaults.onDrag);
