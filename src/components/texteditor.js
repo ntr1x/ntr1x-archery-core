@@ -1,7 +1,7 @@
-(function(Vue) {
+(function(Vue, $) {
 
     Vue.component('texteditor', {
-        template: '<div data-form="texteditor"></div>',
+        template: '<div data-form="texteditor" style="opacity: 0"></div>',
         props: {
             value: String,
             mode: {
@@ -31,6 +31,8 @@
             editor.getSession().setUseWrapMode(true);
             editor.getSession().setWrapLimitRange(80, 80);
 
+            $(this.$el).css({ opacity: 1})
+
             editor.getSession().on('change', () => {
                 this.$emit('input', editor.getSession().getValue())
             })
@@ -40,4 +42,4 @@
         }
     })
 
-})(Vue);
+})(Vue, jQuery);
