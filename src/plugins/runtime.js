@@ -7,7 +7,7 @@
             let runtime = {
 
                 evaluate: function(self, b, v) {
-                    
+
                     if (b && b.expression) {
 
                         try {
@@ -19,9 +19,6 @@
                                 return self.$interpolate(b.expression);
                             }
                         } catch (e) {
-                            if (b.strategy == 'interpolate') {
-                                console.log('Cannot evaluate expression', b.strategy, b.expression, self, e, e.stack);
-                            }
                             return v;
                         }
                     }

@@ -37,12 +37,21 @@
                     return value;
 
                 } catch (e) {
-                    console.groupCollapsed(`Cannot evaluate expression: "${expression}". Default value used.`);
-                    console.warn('Expression:', expression);
-                    console.warn('Context:', ctx);
-                    console.warn('Default:', alternate);
-                    console.warn(e.stack);
-                    console.groupEnd();
+
+                    this.$store.commit('console/log', {
+                        group: 'runtime',
+                        type: 'warning',
+                        message: `Cannot evaluate expression: "${expression}". Default value used.`,
+                        trace: (console) => {
+                            console.groupCollapsed(e.message);
+                            console.warn('Expression:', expression);
+                            console.warn('Context:', ctx);
+                            console.warn('Default:', alternate);
+                            console.warn(e.stack);
+                            console.groupEnd();
+                        }
+                    })
+
                     return alternate;
                 }
             }
@@ -63,13 +72,21 @@
                     return compiled(ctx)
 
                 } catch (e) {
-                    console.warn(``, e, e.stack);
-                    console.groupCollapsed(`Cannot interpolate template: "${template}". Default value used.`);
-                    console.warn('Template:', template);
-                    console.warn('Context:', context);
-                    console.warn('Default:', alternate);
-                    console.warn(e.stack);
-                    console.groupEnd();
+
+                    this.$store.commit('console/log', {
+                        group: 'runtime',
+                        type: 'warning',
+                        message: `Cannot interpolate template: "${template}". Default value used.`,
+                        trace: (console) => {
+                            console.groupCollapsed(e.message);
+                            console.warn('Template:', template);
+                            console.warn('Context:', ctx);
+                            console.warn('Default:', alternate);
+                            console.warn(e.stack);
+                            console.groupEnd();
+                        }
+                    })
+
                     return alternate;
                 }
             }
