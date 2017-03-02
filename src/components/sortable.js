@@ -36,9 +36,9 @@
                 .clone()
                 .addClass(context.sortable.options.draggedClass)
                 .css({
-                    position: 'fixed',
-                    left: event.pageX - context.adjustment.left - 40,
-                    top: event.pageY - context.adjustment.top - 40,
+                    position: 'absolute',
+                    left: event.pageX - context.adjustment.left,// - 40,
+                    top: event.pageY - context.adjustment.top,// - 40,
                     width: size.width,
                     height: size.height,
                 })
@@ -49,8 +49,8 @@
         onDrag: function(context, event) {
 
             context.$item.css({
-                left: event.pageX - context.adjustment.left - 40,
-                top: event.pageY - context.adjustment.top - 40,
+                left: event.pageX - context.adjustment.left,// - 40,
+                top: event.pageY - context.adjustment.top,// - 40,
             })
         },
 
@@ -205,25 +205,8 @@
             if (!context) {
 
                 var $item = $(e.target).closest(this.options.itemSelector);
-                // var $parent = $item.parent();
-
-                // var offset = this.options.offset == 'offset'
-                //     ? $item.offset()
-                //     : $item.position()
-                // ;
-
-                // var poffset = $item.parent().offset();
-                var offset = $item.offset();
-                // var offset = {
-                //     left: parseInt(coffset.left) - parseInt(poffset.left),
-                //     top: parseInt(coffset.top) - parseInt(poffset.top),
-                // }
-
-                // let margin = {
-                //     // left: parseInt($item.css('marginLeft')),
-                //     left: parseInt($item.css('marginLeft')),
-                //     top: parseInt($item.css('marginTop')),
-                // }
+                // var offset = $item.offset();
+                var offset = $item.position();
 
                 context = {
                     sortable: this,
@@ -236,17 +219,10 @@
                     $targetContainer: null,
                     location: this.dropLocation(e),
                     adjustment: {
-                        // left: parseInt(offset.left),
-                        // top: parseInt(offset.top),
-                        // left: 0,
-                        left: parseInt(e.clientX) - parseInt(offset.left),
-                        top: parseInt(e.clientY) - parseInt(offset.top),
-                        // left: e.clientX - 2 * offset.left + size.width / 4,
-                        // top: e.clientY - 2 * offset.top + size.height / 4,
+                        left: parseInt(e.pageX) - parseInt(offset.left),
+                        top: parseInt(e.pageY) - parseInt(offset.top),
                     },
                 };
-
-                // console.log(JSON.stringify(context.adjustment), JSON.stringify(offset));
 
                 this.options.onDragStart(context, e, defaults.onDragStart);
             }
