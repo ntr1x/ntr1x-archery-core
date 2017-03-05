@@ -33,8 +33,22 @@
 
             $(this.$el).css({ opacity: 1})
 
+            // let heightUpdateFunction = () => {
+            //     var newHeight = editor.getSession().getScreenLength() * editor.renderer.lineHeight + editor.renderer.scrollBar.getWidth();
+            //     $(this.$el).height(newHeight.toString() + 'px');
+            //
+            //     // $('#editor-section').height(newHeight.toString() + "px");
+            //     // This call is required for the editor to fix all of
+            //     // its inner structure for adapting to a change in size
+            //     editor.resize();
+            //     console.log('resized')
+            // };
+            // // Set initial size to match initial content
+            // heightUpdateFunction();
+
             editor.getSession().on('change', () => {
                 this.$emit('input', editor.getSession().getValue())
+                // heightUpdateFunction()
             })
         },
         beforeDestroy: function() {

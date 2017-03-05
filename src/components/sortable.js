@@ -199,7 +199,7 @@
                 e.preventDefault();
                 e.stopPropagation();
             } else {
-                // return true;
+                return true;
             }
 
             if (!context) {

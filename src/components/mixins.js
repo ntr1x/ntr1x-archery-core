@@ -109,6 +109,7 @@
         props: {
             page: Object,
             stack: Object,
+            setup: Object,
             bindings: Object,
             children: Array,
             editable: Boolean,
