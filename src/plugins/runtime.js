@@ -26,6 +26,26 @@
                     return v;
                 },
 
+                evaluateOverrides: function(self, model, overrides) {
+
+                    let s = {}
+
+                    for (let sname in overrides) {
+
+                        let storage = overrides[sname]
+                        s[sname] = {}
+
+                        for (let vname in storage) {
+
+                            let variable = storage[vname]
+                            let res = runtime.evaluate(self, variable.binding, variable.value);
+                            s[sname][vname] = res
+                        }
+                    }
+
+                    return s
+                },
+
                 evaluateParams: function(self, props, params, trace) {
 
                     if (trace) {
