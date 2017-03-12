@@ -5,11 +5,11 @@
         bind: function (el) {
 
             if ($.fn.perfectScrollbar) {
-                Vue.nextTick(function() {
-                    $(el).perfectScrollbar({
-                        // axis: this.expression
-                    });
-                }.bind(this));
+                // Vue.nextTick(function() {
+                //     $(el).perfectScrollbar({
+                //         // axis: this.expression
+                //     });
+                // }.bind(this));
             }
 
         },
