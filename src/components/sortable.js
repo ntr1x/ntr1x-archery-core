@@ -94,10 +94,22 @@
         sortables.push(this);
     }
 
+    function onMouseMove(e) {
+        if (context) {
+            context.sortable.handleDrag(e, context);
+        }
+    }
+
     $(document).ready(function() {
         $(document)
             .on('mouseup.sortable', (e) => { context && context.sortable.handleEnd(e, context); })
-            .on('mousemove.sortable', (e) => { context && context.sortable.handleDrag(e, context); })
+            // .on('mousemove.sortable', (e) => { context && context.sortable.handleDrag(e, context); })
+            // .on('drop.sortable', (e) => { context && context.sortable.handleEnd(e, context); })
+            // .on('dragover.sortable', (e) => { context && context.sortable.handleDrag(e, context); })
+            .on('mousemove.sortable', _.throttle(onMouseMove, 250, {
+                'leading': true,
+                'trailing': true,
+            }))
         ;
     });
 
@@ -105,8 +117,12 @@
 
         dropLocation: function(e) {
 
+            console.log('dropLocation')
+
             var $item;
             var sortable;
+
+            var $elementFromPoint = $(document.elementFromPoint(e.pageX, e.pageY));
 
             if (context) {
 
@@ -116,7 +132,7 @@
                 for (let i = 0; i < sortables.length; i++) {
                     let s = sortables[i];
                     if (s.options.drop) {
-                        let $result = $(document.elementFromPoint(e.pageX, e.pageY)).closest(s.options.itemSelector);
+                        let $result = $elementFromPoint.closest(s.options.itemSelector);
                         if ($result.length && $result.closest(s.$element).length) {
                             $item = $result;
                             sortable = s;
@@ -132,7 +148,7 @@
                 for (let i = 0; i < sortables.length; i++) {
                     let s = sortables[i];
                     if (s.options.drop) {
-                        let $result = $(document.elementFromPoint(e.pageX, e.pageY)).closest(s.options.itemSelector);
+                        let $result = $elementFromPoint.closest(s.options.itemSelector);
                         if ($result.length && $result.closest(s.$element).length) {
                             $item = $result;
                             sortable = s;
@@ -288,6 +304,8 @@
         disable: function () {
         },
         destroy: function () {
+            let index = sortables.indexOf(this)
+            sortables.splice(index, 1)
         }
     });
 
