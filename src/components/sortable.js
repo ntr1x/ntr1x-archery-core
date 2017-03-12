@@ -117,16 +117,14 @@
 
         dropLocation: function(e) {
 
-            console.log('dropLocation')
+            let $item;
+            let sortable;
 
-            var $item;
-            var sortable;
-
-            var $elementFromPoint = $(document.elementFromPoint(e.pageX, e.pageY));
+            let $elementFromPoint = $(document.elementFromPoint(e.pageX, e.pageY));
 
             if (context) {
 
-                var display = context.$item.css('display');
+                let display = context.$item.css('display');
                 context.$item.css({ display: 'none', });
 
                 for (let i = 0; i < sortables.length; i++) {
@@ -160,10 +158,10 @@
 
             if (sortable && $item && $item.length) {
 
-                var $container = $item.closest(sortable.options.containerSelector);
+                let $container = $item.closest(sortable.options.containerSelector);
 
-                var offset = $item.offset();
-                var size = {
+                let offset = $item.offset();
+                let size = {
                     width: $item.outerWidth(),
                     height: $item.outerHeight(),
                 };
@@ -272,8 +270,8 @@
 
             if (context) {
 
-                for (var i = 0; i < sortables.length; i++) {
-                    var sortable = sortables[i];
+                for (let i = 0; i < sortables.length; i++) {
+                    let sortable = sortables[i];
                     $(this.options.containerSelector, sortable.$element).removeClass(this.options.activeClass);
                 }
 
