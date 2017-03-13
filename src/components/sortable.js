@@ -207,7 +207,7 @@
                 return true;
             }
 
-            var excludeTags = ['TEXTAREA', 'INPUT', 'BUTTON', 'LABEL'];
+            var excludeTags = ['TEXTAREA', 'INPUT', 'BUTTON', 'LABEL', 'SELECT' ];
 
             if (excludeTags.indexOf($(e.target).prop('tagName')) < 0) {
                 e.preventDefault();
