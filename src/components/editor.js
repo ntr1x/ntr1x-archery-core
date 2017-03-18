@@ -150,25 +150,32 @@
             this.current = JSON.parse(JSON.stringify(this.original));
         },
 
-        data: function() {
+        data() {
             return {
-                current: this.current
+                current: this.current,
+                isDestroyed: false
             }
         },
 
         mounted: function() {
 
             $(this.$el).modal('show');
-            $(this.$el).on('hide.bs.modal', (e) => {
+            $(this.$el).on('hidden.bs.modal', (e) => {
                 e.stopPropagation();
-                this.reset();
+                if (!this.isDestroyed) {
+                    this.reset();
+                    this.$store.commit('modals/editor/close')
+                    this.isDestroyed = true
+                }
             });
         },
 
         destroyed: function() {
-            this.$nextTick(() => {
-                $(this.$el).modal('hide');
-            })
+            if (!this.isDestroyed) {
+                this.$nextTick(() => {
+                    $(this.$el).modal('hide');
+                })
+            }
         },
 
         methods: {
@@ -185,20 +192,38 @@
 
     Core.ModalDialog = {
 
+        data() {
+            return {
+                isDestroyed: false
+            }
+        },
+
         mounted: function() {
 
             $(this.$el).modal('show');
-            $(this.$el).on('hide.bs.modal', (e) => {
+            $(this.$el).on('hidden.bs.modal', (e) => {
                 e.stopPropagation();
-                this.reset();
+                if (!this.isDestroyed) {
+                    this.reset()
+                    this.$store.commit('modals/dialog/close')
+                    this.isDestroyed = true
+                }
             });
         },
 
         destroyed: function() {
-            this.$nextTick(() => {
-                $(this.$el).modal('hide');
-            })
+            if (!this.isDestroyed) {
+                this.$nextTick(() => {
+                    $(this.$el).modal('hide');
+                })
+            }
         },
+
+        methods: {
+            reset() {
+                this.$destroy()
+            }
+        }
     };
 
 })(Vue, jQuery, Core);
