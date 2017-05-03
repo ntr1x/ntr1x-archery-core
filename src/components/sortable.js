@@ -7,7 +7,8 @@
         // vertical: true,
 
         containerSelector: 'ol, ul',
-        itemSelector: 'li',
+        dragSelector: 'li',
+        dropSelector: 'li',
         excludeSelector: '',
 
         bodyClass: 'dragging',
@@ -87,7 +88,7 @@
         this.$element = $element;
         this.options = $.extend({}, defaults, options);
 
-        $element.on('mousedown.sortable', this.options.itemSelector, (e) => { this.handleStart(e); });
+        $element.on('mousedown.sortable', this.options.dragSelector, (e) => { this.handleStart(e); });
 
         this.draggable = null;
 
@@ -130,7 +131,7 @@
                 for (let i = 0; i < sortables.length; i++) {
                     let s = sortables[i];
                     if (s.options.drop) {
-                        let $result = $elementFromPoint.closest(s.options.itemSelector);
+                        let $result = $elementFromPoint.closest(s.options.dropSelector);
                         if ($result.length && $result.closest(s.$element).length) {
                             $item = $result;
                             sortable = s;
@@ -146,7 +147,7 @@
                 for (let i = 0; i < sortables.length; i++) {
                     let s = sortables[i];
                     if (s.options.drop) {
-                        let $result = $elementFromPoint.closest(s.options.itemSelector);
+                        let $result = $elementFromPoint.closest(s.options.dropSelector);
                         if ($result.length && $result.closest(s.$element).length) {
                             $item = $result;
                             sortable = s;
@@ -209,16 +210,16 @@
 
             var excludeTags = ['TEXTAREA', 'INPUT', 'BUTTON', 'LABEL', 'SELECT' ];
 
-            if (excludeTags.indexOf($(e.target).prop('tagName')) < 0) {
-                e.preventDefault();
-                e.stopPropagation();
-            } else {
+            if (excludeTags.indexOf($(e.target).prop('tagName')) >= 0) {
                 return true;
             }
 
+            e.preventDefault();
+            e.stopPropagation();
+
             if (!context) {
 
-                var $item = $(e.target).closest(this.options.itemSelector);
+                var $item = $(e.target).closest(this.options.dragSelector);
                 // var offset = $item.offset();
                 var offset = $item.position();
 
