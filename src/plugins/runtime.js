@@ -122,7 +122,8 @@
 
                                             let vm = new Vue({
                                                 data: Object.assign(JSON.parse(JSON.stringify(self.$data)), {
-                                                    item: result[j]
+                                                    item: result[j],
+                                                    index: j
                                                 })
                                             });
 

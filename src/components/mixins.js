@@ -79,7 +79,9 @@
                 for (let i = 0; i < items.length; i++) {
                     let item = items[i]
                     if (item.uuid == value.uuid) {
-                        Object.assign(item, value)
+                        Object.assign(item, value, {
+                            uuid: Core.UUID.random()
+                        })
                         return;
                     }
                 }

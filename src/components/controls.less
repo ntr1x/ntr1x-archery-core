@@ -27,7 +27,16 @@ textarea.form-control {
 
 [data-form="texteditor"] {
 
-    min-height: 30px;
+    height: auto;
+    max-height: 400px;
+    overflow: auto;
+    padding: 0px;
+
+    .CodeMirror {
+        // border: 1px solid #eee;
+        font-size: 0.9em;
+        height: auto;
+    }
 }
 
 [data-form="file"] {

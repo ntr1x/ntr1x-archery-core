@@ -38,7 +38,6 @@
 
                 } catch (e) {
 
-                    console.log(this)
                     this.$store.commit('console/log', {
                         group: 'runtime',
                         type: 'warning',
@@ -74,7 +73,6 @@
 
                 } catch (e) {
 
-                    console.log(this)
                     this.$store.commit('console/log', {
                         group: 'runtime',
                         type: 'warning',

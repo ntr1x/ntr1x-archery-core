@@ -21,7 +21,14 @@ textarea.form-control + .cke_textarea_inline {
   line-height: 1.5;
 }
 [data-form="texteditor"] {
-  min-height: 30px;
+  height: auto;
+  max-height: 400px;
+  overflow: auto;
+  padding: 0px;
+}
+[data-form="texteditor"] .CodeMirror {
+  font-size: 0.9em;
+  height: auto;
 }
 [data-form="file"] {
   overflow: hidden;
